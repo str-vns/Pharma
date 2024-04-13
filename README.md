@@ -11,3 +11,5 @@ npm i jsonwebtoken dotenv bcrypt bad-words cookie-parser nodemailer multer
 npm i cors
 
 npm i validator
+
+npm i express-async-handler express-rate-limit

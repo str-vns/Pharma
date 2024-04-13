@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema({
       type: String,
       required: [true, "Please Enter Your Phone Number"],
       minlength: [11, "Phone Number must be 11 digits"],
+      maxlength: [11, "Phone Number must be 11 digits"],
   },
   age: {
     type: Number,
@@ -77,11 +78,11 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.statics.softDelete = async function (id) {
-    return await this.findbyIdAndUpdate(id, {deletedAt: true})
-}
+  return await this.updateOne({ _id: id }, { deletedAt: true });
+};
 
 userSchema.statics.restore = async function (id) {
-    return await this.findbyIdAndUpdate(id, {deletedAt: false})
+    return await this.updateOne({ _id: id }, {deletedAt: false})
 }
 
 module.exports = mongoose.model(RESOURCE.USER, userSchema);

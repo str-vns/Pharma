@@ -41,22 +41,22 @@ const userSchema = new mongoose.Schema({
       enum: ["Admin", "Employee", "Customer"],
       default: "Customer",
     },
-//   image: [
-//     {
-//       public_id: {
-//         type: String,
-//         required: true,
-//       },
-//       url: {
-//         type: String,
-//         required: true,
-//       },
-//       originalname: {
-//         type: String,
-//         required: true,
-//       },
-//     },
-//   ],
+  image: [
+    {
+      public_id: {
+        type: String,
+        required: true,
+      },
+      url: {
+        type: String,
+        required: true,
+      },
+      originalname: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
   seniorAt:{
          type: Boolean,
          default: false,

@@ -3,8 +3,10 @@ const { STATUSCODE } = require("../constants")
 const User = require("../models/user")
 const bcrypt = require("bcrypt")
 const ErrorHandler = require("../utils/errorHandler")
+const { uploadImageToFirebase, deleteFirebaseImages } = require("../utils/firebase")
 
 exports.CreateUserInfo = async (req, res) => {
+    console.log(req.body.image)
     const duplicateEmail = await User.findOne({ email: req.body.email})
     .collation({locale: "en"})
     .lean()
@@ -13,16 +15,23 @@ exports.CreateUserInfo = async (req, res) => {
     if (duplicateEmail) throw new Error ("Email already Exists")
 
 
-    
+    if (!req.files || req.files.length === 0) {
+        throw new Error("At least one image is required");
+    }
+
+    const images = await Promise.all(req.files.map(uploadImageToFirebase));
+
     const user = await User.create(
-       { 
-        name:  req.body.name,
+        {
+        name: req.body.name,
         email: req.body.email,
         password: await bcrypt.hash(req.body.password, Number(process.env.SALT_NUMBER)),
         phone: req.body.phone,
         age: req.body.age,
-       }
-    )
+        image: images
+    }
+);
+
 
     return user
 }
@@ -39,14 +48,29 @@ exports.GetAllUser = async (req, res) => {
 exports.UpdateUserInfo =  async (req, res, id) => {
     if( !mongoose.Types.ObjectId.isValid(id))
     throw new ErrorHandler(`Invalid User ID: ${id}`)
-    
+
+    if (!req.files || req.files.length === 0) {
+        throw new Error("At least one image is required");
+    }
+
+    const images = await Promise.all(req.files.map(uploadImageToFirebase));
+
     const existuser = await User.findById(id).lean().exec()
     if(! existuser) throw new ErrorHandler(`User Not Found With This ID: ${id}`)
+
+    const existingPublicIds = existuser.image.map((image) => image.public_id); 
+
+    if (existingPublicIds.length > 0) {
+    await deleteFirebaseImages(existingPublicIds)
+
+    console.log("All images deleted successfully.");
+    }
 
     const updateUser =  await User.findByIdAndUpdate(
         id,
         {
             ...req.body,
+            image: images
         },
         {
             new: true,
@@ -59,6 +83,22 @@ exports.UpdateUserInfo =  async (req, res, id) => {
     if(!updateUser) throw new ErrorHandler(`User Not Found With This ID: ${id}`)
 
     return updateUser
+}
+
+exports.DeleteUserInfo = async (req, res, id) => 
+{
+    if( !mongoose.Types.ObjectId.isValid(id))
+    throw new ErrorHandler(`Invalid User ID: ${id}`)
+    
+    const user = await User.findOne({ _id: id })
+    if(! user) throw new ErrorHandler(`User Not Found With This ID: ${id}`)
+
+    await Promise.all([
+        User.deleteOne({_id: id}).lean().exec(),
+
+    ])
+
+    return user
 }
 
 exports.SoftDeleteUser = async (req, res, id) =>
@@ -91,18 +131,3 @@ exports.RestoreUser = async (req, res, id) =>
     return restoreUser
 }
 
-exports.DeleteUserInfo = async (req, res, id) => 
-{
-    if( !mongoose.Types.ObjectId.isValid(id))
-    throw new ErrorHandler(`Invalid User ID: ${id}`)
-    
-    const user = await User.findOne({ _id: id })
-    if(! user) throw new ErrorHandler(`User Not Found With This ID: ${id}`)
-
-    await Promise.all([
-        User.deleteOne({_id: id}).lean().exec(),
-
-    ])
-
-    return user
-}

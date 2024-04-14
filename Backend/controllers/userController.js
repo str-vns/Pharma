@@ -4,11 +4,14 @@ const SuccessHandler = require("../utils/successHandler")
 const asyncHandler =  require("express-async-handler")
 const MonitorRequiredFields = require("../helpers/MonitorRequiredFields")
 const { STATUSCODE } = require("../constants/index")
+const upload = require("../utils/multer")
 
 exports.RegisterUser = [
-   MonitorRequiredFields(["name", "email", "password","age", "phone"]),
+   upload.array("image"),
+   MonitorRequiredFields(["name", "email", "password","age", "phone","image"]),
     asyncHandler(async (req, res, next) =>
     {
+        console.log("Received file:", req.files); 
         const user = await userProcess.CreateUserInfo(req)
 
         return SuccessHandler(
@@ -30,8 +33,11 @@ exports.GetAllUsers = asyncHandler(async (req, res, next) => {
 })
 
 exports.UpdateUser = [
+    upload.array("image"),
     MonitorRequiredFields(["name", "email", "phone"]),
     asyncHandler(async (req, res, next) => {
+
+        console.log("Received file:", req.files); 
         const user =  await userProcess.UpdateUserInfo(req, res, req.params.id)
 
         return SuccessHandler(

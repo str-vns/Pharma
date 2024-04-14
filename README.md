@@ -13,3 +13,5 @@ npm i cors
 npm i validator
 
 npm i express-async-handler express-rate-limit
+
+npm i firebase uuid

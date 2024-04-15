@@ -112,6 +112,22 @@ const productSchema = new mongoose.Schema({
     comment: { 
         type: String, required: true
      },
+     image: [
+      {
+        public_id: {
+          type: String,
+          required: false,
+        },
+        url: {
+          type: String,
+          required: false,
+        },
+        originalname: {
+          type: String,
+          required: false,
+        },
+      },
+    ],
     createdAt: { 
         type: Date, default: Date.now
      }

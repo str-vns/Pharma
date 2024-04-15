@@ -16,4 +16,8 @@ module.exports = {
     TAGS_ID: "/tags/:id",
     TAGS_EDIT_ID: "/tags/edit/:id",
     RESTORE_TAGS_ID: "/tags/restore/:id",
+    PRODUCT: "/products",
+    PRODUCT_ID: "/product/:id",
+    PRODUCT_EDIT_ID: "/product/edit/:id",
+    RESTORE_PRODUCT_ID: "/product/restore/:id",
 }

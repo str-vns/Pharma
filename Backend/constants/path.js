@@ -8,4 +8,9 @@ module.exports = {
     BRAND_ID: "/brand/:id",
     BRAND_EDIT_ID: "/brand/edit/:id",
     RESTORE_BRAND_ID: "/brand/restore/:id",
+    CATEGORY: "/categories",
+    CATEGORY_ID: "/category/:id",
+    CATEGORY_EDIT_ID: "/category/edit/:id",
+    RESTORE_CATEGORY_ID: "/category/restore/:id"
+
 }

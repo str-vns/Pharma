@@ -11,6 +11,9 @@ module.exports = {
     CATEGORY: "/categories",
     CATEGORY_ID: "/category/:id",
     CATEGORY_EDIT_ID: "/category/edit/:id",
-    RESTORE_CATEGORY_ID: "/category/restore/:id"
-
+    RESTORE_CATEGORY_ID: "/category/restore/:id",
+    TAGS: "/tags",
+    TAGS_ID: "/tags/:id",
+    TAGS_EDIT_ID: "/tags/edit/:id",
+    RESTORE_TAGS_ID: "/tags/restore/:id",
 }

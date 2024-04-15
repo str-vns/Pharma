@@ -51,4 +51,4 @@ brandSchema.statics.restore = async function (id) {
     return await this.updateOne({ _id: id }, {deletedAt: false})
 }
 
-module.exports = mongoose.model(RESOURCE.USER, userSchema);
+module.exports = mongoose.model(RESOURCE.BRAND, brandSchema);

@@ -37,10 +37,6 @@ const brandSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  resetTokenUsed: {
-    type: Boolean,
-    default: false,
-  },
 });
 
 brandSchema.statics.softDelete = async function (id) {

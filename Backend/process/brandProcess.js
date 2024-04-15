@@ -85,8 +85,15 @@ exports.DeleteBrand = async (req, res, id) =>
     if( !mongoose.Types.ObjectId.isValid(id))
     throw new ErrorHandler(`Invalid Brand ID: ${id}`)
     
-    const brand = await Brand.findOne({ _id: id })
-    if(! brand) throw new ErrorHandler(`Brand Not Found With This ID: ${id}`)
+    const existbrand = await Brand.findById(id).lean().exec()
+    if(! existbrand) throw new ErrorHandler(`Brand Not Found With This ID: ${id}`)
+    // console.log(existbrand.image.public_id)
+    const existingPublicIds = existbrand.image.public_id
+
+    if (existingPublicIds.length > 0) {
+    await deleteFirebaseBrand(existingPublicIds)
+    console.log("All images deleted successfully.");
+    }
 
     await Promise.all([
         Brand.deleteOne({_id: id}).lean().exec(),

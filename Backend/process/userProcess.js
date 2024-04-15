@@ -90,8 +90,16 @@ exports.DeleteUserInfo = async (req, res, id) =>
     if( !mongoose.Types.ObjectId.isValid(id))
     throw new ErrorHandler(`Invalid User ID: ${id}`)
     
-    const user = await User.findOne({ _id: id })
-    if(! user) throw new ErrorHandler(`User Not Found With This ID: ${id}`)
+    const existuser = await User.findById(id).lean().exec()
+    if(! existuser) throw new ErrorHandler(`User Not Found With This ID: ${id}`)
+
+    const existingPublicIds = existuser.image.map((image) => image.public_id); 
+
+    if (existingPublicIds.length > 0) {
+    await deleteFirebaseImages(existingPublicIds)
+
+    console.log("All images deleted successfully.");
+    }
 
     await Promise.all([
         User.deleteOne({_id: id}).lean().exec(),

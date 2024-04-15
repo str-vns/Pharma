@@ -6,9 +6,10 @@ const cors = require("cors")
 const corsOptions = require('./config/corsOptions')
 const users = require('./routes/user')
 const brand = require('./routes/brand')
+const category = require('./routes/category')
 app.use(cors(corsOptions))
 app.use(cookiesParser())
 app.use(express.json())
 
-app.use("/api/v1", users, brand)
+app.use("/api/v1", users, brand, category)
 module.exports = app

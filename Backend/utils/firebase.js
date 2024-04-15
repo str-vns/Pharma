@@ -15,7 +15,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 
-
 async function uploadImageToFirebase(imageUpload) {
     try {
         const uniqueFileName = `${v4()}_${imageUpload.originalname}`;
@@ -64,4 +63,48 @@ async function deleteFirebaseImages(imageDelete) {
     }
 }
 
-module.exports = {  uploadImageToFirebase, deleteFirebaseImages};
+async function uploadBrandToFirebase(imageUpload) {
+    try {
+        const uniqueFileName = `${v4()}_${imageUpload.originalname}`;
+        const imageRef = ref(storage, `brands/${uniqueFileName}`);
+        
+        const fileData = fs.readFileSync(imageUpload.path);
+        
+        await uploadBytes(imageRef, fileData, { contentType: imageUpload.mimetype });
+        
+        const url = await getDownloadURL(imageRef);
+        
+        return {
+            url: url,
+            originalname: imageUpload.originalname,
+            public_id: uniqueFileName,
+        };
+
+    } catch (error) {
+        console.error("Error uploading image to Firebase:", error);
+        throw error;
+    }
+}
+
+async function deleteFirebaseBrand(imageDelete) {
+    try {
+        console.log("Deleting images:", imageDelete);
+  
+        const imageRef = ref(storage, `brands/${imageDelete}`);
+        console.log("Deleting image:", imageRef.toString());
+        
+        try {
+            await deleteObject(imageRef);
+            console.log("Image deleted:", imageDelete);
+        } catch (deleteError) {
+            console.error("Error deleting image:", imageDelete, deleteError);
+            throw deleteError;
+        }
+
+    } catch (error) {
+        console.error("Error deleting images:", error);
+        throw error;
+    }
+}
+
+module.exports = {  uploadImageToFirebase, deleteFirebaseImages, uploadBrandToFirebase, deleteFirebaseBrand };

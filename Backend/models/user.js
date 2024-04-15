@@ -71,6 +71,15 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  wishlistAt: [
+    {
+      product_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        // ref: RESOURCE.USER,
+      },
+    },
+  ],
   resetTokenUsed: {
     type: Boolean,
     default: false,

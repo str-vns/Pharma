@@ -26,6 +26,13 @@ const userRoutes = [
         handler: userController.UpdateUser
     },
     {
+        method: METHOD.DELETE,
+        path: PATH.USER_ID,
+        roles: [],
+        middleware: [],
+        handler: userController.DeleteUser
+    },
+    {
         method: METHOD.PATCH,
         path: PATH.USER_ID,
         roles: [],
@@ -34,17 +41,10 @@ const userRoutes = [
     },
     {
         method: METHOD.PATCH,
-        path: PATH.RESTORE_ID,
+        path: PATH.RESTORE_USER_ID,
         roles: [],
         middleware: [],
         handler: userController.RestoreUser
-    },
-    {
-        method: METHOD.DELETE,
-        path: PATH.USER_ID,
-        roles: [],
-        middleware: [],
-        handler: userController.DeleteUser
     },
 
 ]

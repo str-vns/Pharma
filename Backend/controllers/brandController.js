@@ -42,7 +42,7 @@ exports.UpdateBrand = [
 
         return SuccessHandler(
             res,
-            `User ${brand?.brandName} Has Been Updated Successfully`,
+            `Brand ${brand?.brandName} Has Been Updated Successfully`,
             brand
         )
     })

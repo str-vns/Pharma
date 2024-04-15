@@ -68,18 +68,22 @@ const productSchema = new mongoose.Schema({
           type: String,
           required: true
         },
-        quantity: {
+        stock: {
           type: Number,
+          required: true
+        },
+        batchNumber: {
+          type: String,
           required: true
         },
         manufactured:
         {
           type: Date,
-          required: false
+          required: true
         },
         expiration: {
           type: Date,
-          required: false
+          required: true
         }
       }],
   }],

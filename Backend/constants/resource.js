@@ -7,5 +7,7 @@ module.exports = {
     VARIANT: "variant",
     IMAGES: "Images",
     IMAGE: "Image",
+    PRODUCTION: "production",
+    JWT: "jwt",
     NONE: "none"
 }

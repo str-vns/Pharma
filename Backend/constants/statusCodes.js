@@ -7,4 +7,5 @@ module.exports = {
     ONE: 1,
     HUNDRED: 100,
     NEGATIVE_ONE: -1,
+    UNAUTHORIZED: 401,
 }

@@ -46,47 +46,6 @@ const productSchema = new mongoose.Schema({
       },
     },
   ],
-  variants: [{
-     form: {
-        type: String,
-        required: true
-      },
-      strength: {
-        type: String,
-        required: true
-      },
-      dosage: {
-        type: String,
-        required: true
-      },
-      price: {
-        type: Number,
-        required: true
-      },
-      inventory: [{
-        location: {
-          type: String,
-          required: true
-        },
-        stock: {
-          type: Number,
-          required: true
-        },
-        batchNumber: {
-          type: String,
-          required: true
-        },
-        manufactured:
-        {
-          type: Date,
-          required: true
-        },
-        expiration: {
-          type: Date,
-          required: true
-        }
-      }],
-  }],
   numOfReviews: {
     type: Number,
     default: 0,

@@ -1,9 +1,11 @@
 const mongoose = require("mongoose")
 const { STATUSCODE } = require("../constants")
 const Product = require("../models/product")
+const Variant = require("../models/variant")
 const bcrypt = require("bcrypt")
 const ErrorHandler = require("../utils/errorHandler")
 const { uploadImageProduct, deleteImageProduct } = require("../utils/firebase")
+
 
 exports.CreateProduct = async (req, res) => {
     const duplicateName = await Product.findOne({ productName: req.body.productName})
@@ -97,9 +99,10 @@ exports.DeleteProduct = async (req, res, id) =>
 
     await Promise.all([
         Product.deleteOne({_id: id}).lean().exec(),
+        Variant.deleteMany({ product: id}).lean().exec()
     ])
 
-    return product
+    return existproduct
 }
 
 exports.SoftDeleteProduct = async (req, res, id) =>

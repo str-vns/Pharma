@@ -41,4 +41,41 @@ exports.UpdateVariant = [
     })
 ]
 
+exports.DeleteVariant = asyncHandler(async (req, res, next) => 
+{
+    const variant = await variantProcess.DeleteVariant(req, res, req.params.id)
 
+    return variant?.length === STATUSCODE.ZERO
+        ? next(new ErrorHandler("No Variant Found"))
+        : SuccessHandler(
+            res, 
+            variant
+        )
+}
+)
+
+exports.SofttDeleteVariant = asyncHandler(async (req, res, next) => 
+{
+    const variant = await variantProcess.SoftDeleteVariant(req, res, req.params.id)
+
+    return variant?.length === STATUSCODE.ZERO
+        ? next(new ErrorHandler("No Variant Found"))
+        : SuccessHandler(
+            res, 
+            variant
+        )
+}
+)
+
+exports.RestoreVariant = asyncHandler(async (req, res, next) => 
+{
+    const variant = await variantProcess.RestoreVariant(req, res, req.params.id)
+
+    return variant?.length === STATUSCODE.ZERO
+        ? next(new ErrorHandler("No Variant Found"))
+        : SuccessHandler(
+            res, 
+            variant
+        )
+}
+)

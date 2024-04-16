@@ -27,13 +27,25 @@ const variantRoutes = [
     },
     {
         method: METHOD.DELETE,
-        path: PATH.CATEGORY_ID,
+        path: PATH.VARIANT_ID,
         roles: [],
         middleware: [],
-        handler: variantController.DeleteCategory
+        handler: variantController.DeleteVariant
     },
-
-   
+    {
+        method: METHOD.PATCH,
+        path: PATH.VARIANT_ID,
+        roles: [],
+        middleware: [],
+        handler: variantController.SofttDeleteVariant
+    },
+    {
+        method: METHOD.PATCH,
+        path: PATH.RESTORE_VARIANT_ID,
+        roles: [],
+        middleware: [],
+        handler: variantController.RestoreVariant
+    },
 
 ]
 

@@ -66,6 +66,48 @@ exports.UpdateVariant=  async (req, res, id) => {
     return UpdateVariant
 }
 
+exports.DeleteVariant = async (req, res, id) => 
+{
+    if( !mongoose.Types.ObjectId.isValid(id))
+    throw new ErrorHandler(`Invalid Product ID: ${id}`)
+    
+    const existproduct = await Variant.findById(id).lean().exec()
 
+    if(! existproduct) throw new ErrorHandler(`Variant Not Found With This ID: ${id}`)
 
+    await Promise.all([
+        Variant.deleteOne({_id: id}).lean().exec(),
+    ])
 
+    return existproduct
+}
+
+exports.SoftDeleteVariant = async (req, res, id) =>
+{
+    if( !mongoose.Types.ObjectId.isValid(id))
+    throw new ErrorHandler(`Invalid Product ID: ${id}`)
+    
+    const existVariant = await Variant.findById(id).lean().exec()
+    if(! existVariant) throw new ErrorHandler(`Variant Not Found With This ID: ${id}`)
+
+    const softDelVariant =  await Variant.softDelete(id)
+
+    if(!softDelVariant) throw new ErrorHandler(`Variant not found with ID: ${id}`);
+    
+    return softDelVariant
+}
+
+exports.RestoreVariant = async (req, res, id) =>
+{
+    if( !mongoose.Types.ObjectId.isValid(id))
+    throw new ErrorHandler(`Invalid Product ID: ${id}`)
+    
+    const existvariant = await Variant.findById(id).lean().exec()
+    if(! existvariant) throw new ErrorHandler(`Variant Not Found With This ID: ${id}`)
+
+    const restoreVariant =  await Variant.restore(id)
+
+    if(!restoreVariant) throw new ErrorHandler(`Variant not found with ID: ${id}`);
+    
+    return restoreVariant
+}

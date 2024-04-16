@@ -24,22 +24,18 @@ const variantSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
   inventory: [
     {
+    batchNum: {
+        type: String,
+        required: true,
+      },
       location: {
         type: String,
         required: true,
       },
       stock: {
         type: Number,
-        required: true,
-      },
-      batchNumber: {
-        type: String,
         required: true,
       },
       manufactured: {
@@ -49,6 +45,10 @@ const variantSchema = new mongoose.Schema({
       expiration: {
         type: Date,
         required: true,
+      },
+      ExpiredAt: {
+        type: Boolean,
+        default: false,
       },
     },
   ],
@@ -62,4 +62,12 @@ const variantSchema = new mongoose.Schema({
   },
 });
 
+variantSchema.statics.softDelete = async function (id) {
+    return await this.updateOne({ _id: id }, { deletedAt: true });
+  };
+  
+variantSchema.statics.restore = async function (id) {
+    return await this.updateOne({ _id: id }, {deletedAt: false})
+  }
+  
 module.exports = mongoose.model(RESOURCE.VARIANT, variantSchema);

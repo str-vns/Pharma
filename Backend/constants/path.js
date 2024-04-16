@@ -20,4 +20,7 @@ module.exports = {
     PRODUCT_ID: "/product/:id",
     PRODUCT_EDIT_ID: "/product/edit/:id",
     RESTORE_PRODUCT_ID: "/product/restore/:id",
+    VARIANT: "/variants",
+    VARIANT_ID: "/variant/:id",
+    VARIANT_EDIT_ID: "/variant/edit/:id",
 }

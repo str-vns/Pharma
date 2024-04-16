@@ -9,11 +9,12 @@ const brand = require('./routes/brand')
 const category = require('./routes/category')
 const tags = require('./routes/tags')
 const product = require('./routes/product')
+const variant = require('./routes/variant')
 
 app.use(cors(corsOptions))
 app.use(cookiesParser())
 app.use(express.json())
 
-app.use("/api/v1", users, brand, category, tags, product)
+app.use("/api/v1", users, brand, category, tags, product, variant)
 
 module.exports = app

@@ -10,11 +10,12 @@ const category = require('./routes/category')
 const tags = require('./routes/tags')
 const product = require('./routes/product')
 const variant = require('./routes/variant')
+const inventory = require('./routes/inventory')
 
 app.use(cors(corsOptions))
 app.use(cookiesParser())
 app.use(express.json())
 
-app.use("/api/v1", users, brand, category, tags, product, variant)
+app.use("/api/v1", users, brand, category, tags, product, variant, inventory)
 
 module.exports = app

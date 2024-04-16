@@ -23,4 +23,9 @@ module.exports = {
     VARIANT: "/variants",
     VARIANT_ID: "/variant/:id",
     VARIANT_EDIT_ID: "/variant/edit/:id",
+    RESTORE_VARIANT_ID: "/variant/restore/:id",
+    INVENTORY: "/inventory",
+    INVENTORY_ID: "/inventory/:id",
+    INVENTORY_EDIT_ID: "/inventory/edit/:id",
+    RESTORE_INVENTORY_ID: "/inventory/restore/:id",
 }

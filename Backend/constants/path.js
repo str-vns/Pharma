@@ -4,6 +4,8 @@ module.exports = {
     USER_EDIT_ID: "/user/edit/:id",
     RESTORE_USER_ID: "/user/restore/:id",
     REGISTER: "/register",
+    LOGIN: "/login",
+    LOGOUT: "/logout",
     BRAND: "/brands",
     BRAND_ID: "/brand/:id",
     BRAND_EDIT_ID: "/brand/edit/:id",

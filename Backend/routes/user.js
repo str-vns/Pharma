@@ -46,7 +46,6 @@ const userRoutes = [
         middleware: [],
         handler: userController.RestoreUser
     },
-
 ]
 
 userRoutes.forEach((route) =>

@@ -36,7 +36,7 @@ exports.CreateUserInfo = async (req, res) => {
     return user
 }
 
-exports.GetAllUser = async (req, res) => {
+exports.ReadUser = async (req, res) => {
     const users =  await User.find()
     .sort({ createdAt: STATUSCODE.NEGATIVE_ONE})
     .lean()
